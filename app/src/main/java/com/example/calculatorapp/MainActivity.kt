@@ -3,6 +3,7 @@ package com.example.calculatorapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.calculatorapp.databinding.ActivityMainBinding
+import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
  lateinit var binding: ActivityMainBinding
@@ -80,6 +81,17 @@ class MainActivity : AppCompatActivity() {
             binding.tvSolution.append(")")
         }
 
+        binding.btnEqual.setOnClickListener {
+            val expression= ExpressionBuilder(binding.tvSolution.text.toString()).build()
+            val result= expression.evaluate()
+            val longResult= result.toLong()
 
+            if (result==longResult.toDouble()){
+            binding.tvResult.text= longResult.toString()
+            }
+            else{
+                binding.tvResult.text= result.toString()
+            }
+        }
     }
 }
